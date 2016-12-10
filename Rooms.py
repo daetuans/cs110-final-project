@@ -75,32 +75,33 @@ class MainGUI():
 ##Controller Functions--------------------------------------------------------
   def getIntroduction(self, event):
     introductionCounter = 0
-    introductionCounter.increment()
+    introductionCounter = incrementCounter + 1
     introduction(introductionCounter)
 
   fatherCounter = 0
   def getFathersReponse(self, event):
-    fatherCounter.increment()
     if fatherCounter >= 3:
       self.__textToDisplay = fatherDialogue(fatherCounter)
+      fatherCounter = fatherCounter + 1
     else:
       fatherCounter = 0
 
   motherCounter = 0
   def getMothersResponse(self, event):
-    motherCounter.increment()
     if motherCounter >= 3:
       self.__textToDisplay = motherDialogue(motherCounter)
+      motherCounter = motherCounter + 1
     else:
       motherCounter = 0
 
   brotherCounter = 0
   def getBrothersResponse(self, event):
-    brotherCounter.increment()
     if brotherCounter >= 3:
       self.__textToDisplay = brotherDialogue(brotherCounter)
+      brotherCounter = brotherCounter + 1
     else:
       brotherCounter = 0
+    
 
       
       
