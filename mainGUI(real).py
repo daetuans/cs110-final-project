@@ -1,4 +1,6 @@
 from tkinter import *
+from classDialogue import *
+from titleGUI import *
 
 class MainGUI():
   def __init__(self):
@@ -18,10 +20,8 @@ class MainGUI():
     self.__subMenu.add_separator()
     self.__subMenu.add_command(label="Remember...", command=self.future)
 
-
 ##    self.__label = Label(self.__root, bg="gray")
 ##    self.__label.place(x=0, y=0, height=550, width=750)
-
 
 ##Room buttons----------------------------------------------------------------
     self.__livingRoomButton = Button(self.__root, text="Living Room")
@@ -59,8 +59,7 @@ class MainGUI():
     self.__exploreButtonThree = Button(self.__root, text="Explore\n Room")
     self.__exploreButtonThree.place(x=10, y=330, width=80, height=50)
 
-##Choice buttons--------------------------------------------------------------
-        
+##Choice buttons--------------------------------------------------------------  
     self.__choiceAButton = Button(self.__root, text='A')
     self.__choiceAButton.place(x=443.5, y=430, height=40, width=60)
 
@@ -70,8 +69,6 @@ class MainGUI():
     self.__choiceCButton = Button(self.__root, text='C')
     self.__choiceCButton.place(x=658.5, y=430, height=40, width=60)
     
-  
-
 ##Entry Box-------------------------------------------------------------------
     self.__entryBox = Entry(self.__root, width=52)
     self.__entryBox.bind('<Return>')
@@ -85,29 +82,29 @@ class MainGUI():
     self.__forwardButton = Button(self.__root, text="Forward")
     self.__forwardButton.place(x=330, y=430, width=75, height=87)
 
+  def future(self):
+    print("New content coming soon...")
+
+##mainloop--------------------------------------------------------------------
     self.__root.mainloop()
 
+    
+##Status Page-----------------------------------------------------------------
 class StatusGUI():
   pass
 
+##Item Page-------------------------------------------------------------------
 class ItemGUI():
   pass
 
-class StartPageGUI():
+##Start Page------------------------------------------------------------------
+class StartPageGUI(titleWindow):
   pass
 
+##Lab Page--------------------------------------------------------------------
 class LabGUI():
   pass
     
-
-    
-
-
-
-
-    self.__root.mainloop()
-  def future(self):
-    print("New content coming soon...")
 
 
 MainGUI()
