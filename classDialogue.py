@@ -35,7 +35,7 @@ class Dialogue:
     #time player presses the forward button the counter increments and\
     #extracts the next item in the list. All other buttons are diabled until\
     #the list is empy (might have to create a flag here to do that)
-    return self.__intoDialogue[counter]
+    return self.__intoDialogue[introCounter]
 
 ##Father----------------------------------------------------------------------
   def fatherDialogue(self, fatherCounter):
@@ -43,7 +43,7 @@ class Dialogue:
     #his intro speech comes on the screen. 
     return self.__fatherIntroduction[fatherCounter]
   
-  def fatherResponseButton(self, button):'
+  def fatherResponseButton(self, button):
   #At the end of list of the fathers intro will describe the three choices\
   #the user can choose from. The A, B, and C buttons will enable
     if button == Dialogue.CHOICE_A:
@@ -52,7 +52,7 @@ class Dialogue:
     elif button == Dialogue.CHOICE_B:
       self.__fatherResponse = self.__fatherResponce[Dialogue.COUNTER_TWO]
       self.addMemory(self__rememberStages[COUNTER_TWO])
-    elif button = Dialogue.CHOICE_C:
+    elif button == Dialogue.CHOICE_C:
       self.__fatherResponse = self.__fatherResponce[Dialogue.COUNTER_THREE]
       self.addMemory(self__rememberStages[COUNTER_THREE])
     return self.__fatherResponse
@@ -69,7 +69,7 @@ class Dialogue:
     elif button == Dialogue.CHOICE_B:
       self.__motherResponse = self.__motherResponce[Dialogue.COUNTER_TWO]
       self.addMemory(self__rememberStages[COUNTER_FIVE])
-    elif button = Dialogue.CHOICE_C:
+    elif button == Dialogue.CHOICE_C:
       self.__motherResponse = self.__motherResponce[Dialogue.COUNTER_THREE]
       self.addMemory(self__rememberStages[COUNTER_SIX])
     return self.__motherResponse
@@ -86,7 +86,7 @@ class Dialogue:
     elif button == Dialogue.CHOICE_B:
       self.__brotherResponse = self.__brotherResponce[Dialogue.COUNTER_TWO]
       self.addMemory(self__rememberStages[COUNTER_EIGHT])
-    elif button = Dialogue.CHOICE_C:
+    elif button == Dialogue.CHOICE_C:
       self.__brotherResponse = self.__brotherResponce[Dialogue.COUNTER_THREE]
       self.addMemory(self__rememberStages[COUNTER_NINE])
     return self.__brotherResponse
@@ -101,7 +101,7 @@ class Dialogue:
     else:
       self.__remember.append(memory)
 
-  def rememberMonologue(self, rememberCounter)
+  def rememberMonologue(self, rememberCounter):
     #When the user goes to the dropdown menu and selects menu, the memory\
     #will appear in the dialogue box. Every time the user presses forward\
     #the next memory in the lest will appear
