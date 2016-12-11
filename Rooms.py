@@ -1,4 +1,9 @@
 from tkinter import *
+import classDialogue
+brotherCounter = 0
+motherCounter = 0
+fatherCounter = 0
+introCounter = 0
 class MainGUI():
   def __init__(self):
     self.__root = Tk()
@@ -53,7 +58,7 @@ class MainGUI():
 ##
 ##Choice buttons--------------------------------------------------------------
         
-    self.__choiceAButton = Button(self.__root, text='A')
+    self.__choiceAButton = Button(self.__root, text='A', command=self.choiceA)
     self.__choiceAButton.place(x=443.5, y=430, height=40, width=60)
     self.__choiceBButton = Button(self.__root, text='B')
     self.__choiceBButton.place(x=551, y=430, height=40, width=60)
@@ -67,40 +72,16 @@ class MainGUI():
     self.__entryBox.place(x=423.5, y=480, height=35)
 ##Text Box--------------------------------------------------------------------
     self.__textToDisplay = ""
-    self.__textBox = Label(self.__root, bg='white', text="Insert dialogue here. . .")
+    self.__textBox = Label(self.__root, bg='white', text=self.__textToDisplay)
     self.__textBox.place(x=10, y=430, height=87, width=320)
 ##Progression Button----------------------------------------------------------
     self.__forwardButton = Button(self.__root, text="Forward")
+    self.__forwardButton.bind("<Button-1>", self.getIntroduction)
     self.__forwardButton.place(x=330, y=430, width=75, height=87)
-##Controller Functions--------------------------------------------------------
-  def getIntroduction(self, event):
-    introductionCounter = 0
-    introductionCounter = incrementCounter + 1
-    introduction(introductionCounter)
 
-  fatherCounter = 0
-  def getFathersReponse(self, event):
-    if fatherCounter >= 3:
-      self.__textToDisplay = fatherDialogue(fatherCounter)
-      fatherCounter = fatherCounter + 1
-    else:
-      fatherCounter = 0
-
-  motherCounter = 0
-  def getMothersResponse(self, event):
-    if motherCounter >= 3:
-      self.__textToDisplay = motherDialogue(motherCounter)
-      motherCounter = motherCounter + 1
-    else:
-      motherCounter = 0
-
-  brotherCounter = 0
-  def getBrothersResponse(self, event):
-    if brotherCounter >= 3:
-      self.__textToDisplay = brotherDialogue(brotherCounter)
-      brotherCounter = brotherCounter + 1
-    else:
-      brotherCounter = 0
+  
+    
+    
     
 
       
@@ -110,6 +91,97 @@ class MainGUI():
 
 
     self.__root.mainloop()
+  ##Controller Functions--------------------------------------------------------
+  def getIntroduction(self, event):
+    global introCounter
+    if introCounter >= 3:
+      self.__textToDisplay = Dialogue.introduction(introCounter)
+      introCounter = introCounter + 1
+    else:
+      introCounter = 0
+
+  
+  def getFatherResponse(self, event):
+    self.getConversationStatus("Father")
+    self.__boyButton['state'] = "disabled"
+    self.__motherButton['state'] = "disabled"
+    global fatherCounter
+    if fatherCounter >= 3:
+      self.__textToDisplay = Dialogue.fatherDialogue(fatherCounter)
+      fatherCounter = fatherCounter + 1
+    else:
+      fatherCounter = 0
+      self.__boyButton['state'] = "normal"
+      self.__motherButton['state'] = "normal"
+
+  
+  def getMotherResponse(self, event):
+    self.getConversationStatus("Mother")
+    self.__boyButton['state'] = "disabled"
+    self.__fatherButton['state'] = "disabled"
+    global motherCounter
+    if motherCounter >= 3:
+      self.__textToDisplay = Dialogue.motherDialogue(motherCounter)
+      motherCounter = motherCounter + 1
+    else:
+      motherCounter = 0
+      self.__boyButton['state'] = "normal"
+      self.__fatherButton['state'] = "normal"
+
+  
+  def getBrotherResponse(self, event):
+    self.getConversationStatus("Brother")
+    self.__fatherButton['state'] = "disabled"
+    self.__motherButton['state'] = "disabled"
+    global brotherCounter
+    if brotherCounter >= 3:
+      self.__textToDisplay = Dialogue.brotherDialogue(brotherCounter)
+      brotherCounter = brotherCounter + 1
+    else:
+      brotherCounter = 0
+      self.__fatherButton['state'] = "normal"
+      self.__motherButton['state'] = "normal"
+
+  def setConversationStatus(self, status):
+    if status == "Father":
+      conversationStatus = "Father"
+    if status == "Brother":
+     conversationStatus = "Brother"
+    if status == "Mother":
+      conversationStatus = "Mother"
+    return conversationStatus
+
+  def getConversationStatus(self, status):
+    return self.setConversationStatus(status)
+    
+
+  def choiceA(self, event):
+    choice = 'A'
+    if self.getConversationStatus("Father") == "Father":
+      self.__textToDisplay = Dialogue.fatherResponseButton(choice)
+    if self.getConversationStatus("Mother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+    if self.getConversationStatus("Brother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+    
+  def choiceB(self, event):
+    choice = 'B'
+    if self.getConversationStatus("Father") == "Father":
+      self.__textToDisplay = Dialogue.fatherResponseButton(choice)
+    if self.getConversationStatus("Mother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+    if self.getConversationStatus("Brother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+
+  def choiceC(self, event):
+    choice = 'C'
+    if self.getConversationStatus("Father") == "Father":
+      self.__textToDisplay = Dialogue.fatherResponseButton(choice)
+    if self.getConversationStatus("Mother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+    if self.getConversationStatus("Brother") == "Mother":
+      self.__textToDisplay = Dialogue.motherResponseButton(choice)
+
   def future(self):
     print("New content coming soon...")
 
