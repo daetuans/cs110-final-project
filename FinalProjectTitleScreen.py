@@ -21,13 +21,10 @@ class titleWindow:
         self.__programImage = self.__can.create_image(151, 150, image=self.__pic)
         self.__can.pack()
 
-        self.__nameEntryLabel = tkinter.Label(self.__botFrame, text='Please enter' + \
-                                    ' your name:', font=("Times New Roman", 17))
+        self.__nameEntryLabel = tkinter.Label(self.__botFrame, text='Click the button ' + \
+                                    'to start the game ', font=("Times New Roman", 17))
 
-        self.__nameEntry = tkinter.Entry(self.__botFrame, width=50)
-        self.__nameEntry.bind('<Return>', self.__userName)
-        self.__nameEntryLabel.pack()
-        self.__nameEntry.pack()
+        
 
 
 
