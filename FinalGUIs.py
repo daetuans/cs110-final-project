@@ -1,13 +1,13 @@
 from tkinter import *
-from classDialogue import Dialogue
 
 
 class TitleWindow():
 
   def __init__(self, master):
     self.__master = master
-    self.__master.geometry('750x550')
+    self.__master.geometry('750x575')
     self.__master.title(' ')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
     
     self.__userName = None
     self.__topFrame = Frame(self.__master)
@@ -62,15 +62,14 @@ class TitleWindow():
 class MainGUI:
   def __init__(self, master):
     self.__master = master
-    self.__master.geometry('750x550')
-    #X AND Y LENGTHS AND HEIGHT: 750-X, 550-Y    
+    self.__master.geometry('750x575')
+    #X AND Y LENGTHS AND HEIGHT: 750-X, 575-Y    
     self.__master.title((' '*100)+'THE DOG')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    
     self.__menu = Menu(self.__master)
     self.__master.config(menu=self.__menu)
-    self.__dialogue = StringVar()
     
-   
-
     self.__subMenu = Menu(self.__menu)
     self.__menu.add_cascade(label='Think . . .', menu=self.__subMenu)
 
@@ -78,6 +77,8 @@ class MainGUI:
     self.__subMenu.add_command(label="Status", command=self.goToStatusGUI)
     self.__subMenu.add_separator()
     self.__subMenu.add_command(label="Remember...", command=self.future)
+
+    self.__dialogue = StringVar()
 
 ##Living Room Picture---------------------------------------------------------
     self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490,\
@@ -126,6 +127,7 @@ class MainGUI:
 ##Secret Room-----------------------------------------------------------------        
     self.__secretRoomButton = Button(self.__master, text="?")
     self.__secretRoomButton.place(x=10, y=315, width=100, height=75)
+    self.__secretRoomButton.config(state=DISABLED)
 
 ##Choice buttons--------------------------------------------------------------  
     self.__choiceAButton = Button(self.__master, text='A')
@@ -161,7 +163,7 @@ class MainGUI:
     print("New content coming soon...")
 
   def displayDialogue(self):
-    return self.__dialogue.set('booty')
+    return self.__dialogue.set('stuff')
     
   def goToStatusGUI(self):
     root2=Toplevel(self.__master)
@@ -176,8 +178,9 @@ class MainGUI:
 class StatusGUI():
   def __init__(self, master):
     self.__master = master
-    self.__master.geometry('750x550')
+    self.__master.geometry('750x575')
     self.__master.title((' '*100) +'STATUS')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
 
     self.__menu = Menu(self.__master)
     self.__master.config(menu=self.__menu)
@@ -234,8 +237,9 @@ class StatusGUI():
 class ItemsGUI():
   def __init__(self, master):
     self.__master = master
-    self.__master.geometry('750x550')
+    self.__master.geometry('750x575')
     self.__master.title((' '*100) +'ITEMS')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
 
     self.__menu = Menu(self.__master)
     self.__master.config(menu=self.__menu)
