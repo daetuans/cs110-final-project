@@ -63,7 +63,7 @@ class MainGUI:
   def __init__(self, master):
     self.__master = master
     self.__master.geometry('750x575')
-    #X AND Y LENGTHS AND HEIGHT: 750-X, 575-Y    
+    #X AND Y WIDTH AND HEIGHT: 750-X, 575-Y    
     self.__master.title((' '*100)+'THE DOG')
     self.__master.wm_iconbitmap('bloodhfinal.ico')
     
@@ -81,8 +81,7 @@ class MainGUI:
     self.__dialogue = StringVar()
 
 ##Living Room Picture---------------------------------------------------------
-    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490,\
-                                     bg='white')
+    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
     self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
     self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
                             (247,189,image=self.__mainRoomPic)
@@ -125,9 +124,10 @@ class MainGUI:
     self.__exploreButtonThree.place(x=10, y=213.2, width=100, height=75)
 
 ##Secret Room-----------------------------------------------------------------        
-    self.__secretRoomButton = Button(self.__master, text="?")
+    self.__secretRoomButton = Button(self.__master, text="?",\
+                                     command=self.goToLabGUI)
     self.__secretRoomButton.place(x=10, y=315, width=100, height=75)
-    self.__secretRoomButton.config(state=DISABLED)
+##    self.__secretRoomButton.config(state=DISABLED)
 
 ##Choice buttons--------------------------------------------------------------  
     self.__choiceAButton = Button(self.__master, text='A')
@@ -173,11 +173,16 @@ class MainGUI:
   def goToItemGUI(self):
     root2=Toplevel(self.__master)
     myGUI=ItemsGUI(root2)
+
+  def goToLabGUI(self):
+    root2=Toplevel(self.__master)
+    myGUI=LabGUI(root2)
     
 ##Status Page-----------------------------------------------------------------
 class StatusGUI():
   def __init__(self, master):
     self.__master = master
+    self.__master.protocol('WM_DELETE_WINDOW', self.future)
     self.__master.geometry('750x575')
     self.__master.title((' '*100) +'STATUS')
     self.__master.wm_iconbitmap('bloodhfinal.ico')
@@ -233,6 +238,10 @@ class StatusGUI():
 ##Go Back Button--------------------------------------------------------------
   def goBack(self):
     self.__master.destroy()
+
+  def future(self):
+    print("New content coming soon...")
+
 ##Item Page-------------------------------------------------------------------
 class ItemsGUI():
   def __init__(self, master):
@@ -280,7 +289,72 @@ class ItemsGUI():
 
 ##Lab Page--------------------------------------------------------------------
 class LabGUI():
-  pass
+  def __init__(self, master):
+    self.__master = master
+    self.__master.geometry('750x575')
+    self.__master.title((' '*100)+'THE LAB')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    self.__master.protocol('WM_DELETE_WINDOW', self.doNothing)
+    self.__dialogue = StringVar()
+
+##Menu------------------------------------------------------------------------
+    self.__menu = Menu(self.__master)
+    self.__master.config(menu=self.__menu)
+
+    self.__subMenu = Menu(self.__menu)
+    self.__menu.add_cascade(label='Exit your lab', menu=self.__subMenu)
+
+    self.__subMenu.add_command(label="Living Room",\
+                               command=self.youCant)
+
+##Lab Background--------------------------------------------------------------
+    self.__labCanvas = Canvas(self.__master, height=575, width=750)
+    self.__labPic = PhotoImage(file='evilLabFinal.gif')
+    self.__labScreen =self.__labCanvas.create_image\
+                            (375,287.5,image=self.__labPic)
+    self.__labCanvas.place(x=0, y=0)
+
+##Choice buttons--------------------------------------------------------------  
+    self.__choiceAButton = Button(self.__master, text='A')
+    self.__choiceAButton.place(x=20, y=500, height=40, width=60)
+
+    self.__choiceBButton = Button(self.__master, text='B')
+    self.__choiceBButton.place(x=137.5, y=500, height=40, width=60)
+
+    self.__choiceCButton = Button(self.__master, text='C')
+    self.__choiceCButton.place(x=245, y=500, height=40, width=60)
+    
+##Entry Box-------------------------------------------------------------------
+    self.__entryBox = Entry(self.__master, width=52)
+    self.__entryBox.bind('<Return>')
+    self.__entryBox.place(x=353.5, y=502, height=35)
+
+##Enter Button----------------------------------------------------------------
+    self.__enterButton = Button(self.__master, text='Enter')
+    self.__enterButton.place(x=670, y=502, height=35, width=60)
+    
+##Text Box--------------------------------------------------------------------
+    self.__textBox = Label(self.__master, anchor=NW,\
+                           bg='white', textvariable = self.__dialogue)
+    self.__textBox.place(x=10, y=425, height=70, width=655)
+
+##Progression Button----------------------------------------------------------
+    self.__forwardButton = Button(self.__master, text="Forward",\
+                                  command=self.displayDialogue)
+    self.__forwardButton.place(x=665, y=425, width=75, height=70)    
+
+##Sample Functions------------------------------------------------------------
+  def youCant(self):
+    messagebox.showinfo("It's too late to go back.",\
+                        "Finish what you started.")
+
+  def doNothing(self):
+    pass
+
+  def displayDialogue(self):
+    return self.__dialogue.set('stuff')
+
+ 
     
 
 
