@@ -35,7 +35,7 @@ class Dialogue:
     #time player presses the forward button the counter increments and\
     #extracts the next item in the list. All other buttons are diabled until\
     #the list is empy (might have to create a flag here to do that)
-    return self.__intoDialogue[introCounter]
+    return self.__introDialogue[introCounter]
 
 ##Father----------------------------------------------------------------------
   def fatherDialogue(self, fatherCounter):
@@ -75,7 +75,7 @@ class Dialogue:
     return self.__motherResponse
 
 ##Brother---------------------------------------------------------------------
-  def brotherDialogue(self, motherCounter):
+  def brotherDialogue(self, brotherCounter):
     #same as father
     return self.__brotherIntroduction[brotherCounter]
   
@@ -106,6 +106,3 @@ class Dialogue:
     #will appear in the dialogue box. Every time the user presses forward\
     #the next memory in the lest will appear
     return self.__remember[rememberCounter]
-        
-        
-        

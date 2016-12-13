@@ -1,5 +1,6 @@
 from tkinter import *
 from classDialogue import Dialogue
+import pyglet
 
 brotherCounter = -1
 motherCounter = -1
@@ -12,7 +13,7 @@ class TitleWindow():
     self.__master = master
     self.__master.geometry('750x575')
     self.__master.title(' ')
-##    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
     
     self.__userName = None
     self.__topFrame = Frame(self.__master)
@@ -61,6 +62,8 @@ class TitleWindow():
   def goToMainGUI(self):
     root2=Toplevel(self.__master)
     myGUI=MainGUI(root2)
+##    foo=pyglet.media.load("creepymusic.wav")
+##    foo.play()
     
     
 
@@ -83,6 +86,7 @@ class MainGUI:
     self.__subMenu.add_command(label="Status", command=self.goToStatusGUI)
     self.__subMenu.add_separator()
     self.__subMenu.add_command(label="Remember...", command=self.future)
+
 
     self.__dialogue = StringVar()
     self.__classDialogue = Dialogue()
@@ -164,9 +168,9 @@ class MainGUI:
     self.__textBox.place(x=10, y=400, height=87, width=655)
 
 ##Progression Button----------------------------------------------------------
-    self.__forwardButton = Button(self.__master, text="Forward",\
-                                  command=self.displayDialogue)
+    self.__forwardButton = Button(self.__master, text="Introduction")
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
+    self.__forwardButton.bind("<Button-1>", self.introCountUp)
 
 ##Sample Function-------------------------------------------------------------
   def updateDisplay(self, textToDisplay):
@@ -188,40 +192,48 @@ class MainGUI:
     root2=Toplevel(self.__master)
     myGUI=ItemsGUI(root2)
 
-  def getIntroduction(self, event):
-    global introCounter
-    if introCounter >= 3:
-      self.__textToDisplay = introduction(introCounter)
-      introCounter = introCounter + 1
-    else:
-      introCounter = 0
+  
 
   def fatherCountUp(self, event):
     global fatherCounter
     fatherCounter = fatherCounter + 1
-    if fatherCounter <= 2:
+    if fatherCounter <= 2 and fatherCounter > -1:
       self.getFatherResponse(fatherCounter)
     else:
-      fatherCounter = 0
-    print(fatherCounter)
+      fatherCounter = -1
+      self.updateDisplay(" ")
 
   def motherCountUp(self, event):
     global motherCounter
     motherCounter = motherCounter + 1
-    if motherCounter <= 2:
+    if motherCounter <= 2 and motherCounter > -1:
       self.getMotherResponse(motherCounter)
     else:
-     motherCounter = 0
-    print(motherCounter)
-
+     motherCounter = -1
+     self.updateDisplay(" ")
+    
   def brotherCountUp(self, event):
     global brotherCounter
     brotherCounter = brotherCounter + 1
-    if brotherCounter <= 2:
+    if brotherCounter <= 2 and brotherCounter > -1:
       self.getBrotherResponse(brotherCounter)
     else:
-      brotherCounter = 0
-    print(brotherCounter)
+      brotherCounter = -1
+      self.updateDisplay(" ")
+    
+  def introCountUp(self, event):
+    global introCounter
+    introCounter = introCounter + 1
+    if introCounter <= 2 and introCounter > -1:
+      self.getIntroduction(introCounter)
+    else:
+      introCounter = -1
+      self.updateDisplay(" ")
+
+  def getIntroduction(self, counter):
+    self.updateDisplay(self.__classDialogue.introduction(counter))
+    
+
   
   def getFatherResponse(self, counter):
     self.getConversationStatus("Father")
