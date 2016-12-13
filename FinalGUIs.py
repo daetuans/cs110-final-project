@@ -103,15 +103,16 @@ class MainGUI:
 ##    self.__secretRoomButton.place(x=595, y=10, width=100, height=50)
 ##
 ##Family member buttons-------------------------------------------------------
-    self.__fatherButton = Button(self.__master, text="Talk to\n Father",\
-                              command=self.fatherIntro)
-    self.__fatherButton.place(x=640, y=30, width=100, height=75)
+##    self.__fatherButton = Button(self.__master, text="Talk to\n Father",\
+##                              command=self.fatherIntro)
+##    self.__fatherButton.place(x=640, y=30, width=100, height=75)
     
-    self.__motherButton = Button(self.__master, text="Talk to\n Mother")
-    self.__motherButton.place(x=640, y=167.4, width=100, height=75)
+    self.__fatherButton = Button(self.__master, text="Talk to\n Boy",\
+                                 command=self.fatherIntro)
+    self.__fatherButton.place(x=640, y=167.4, width=100, height=75)
 
-    self.__boyButton = Button(self.__master, text="Talk to\n Boy")
-    self.__boyButton.place(x=640, y=295, width=100, height=75)
+##    self.__boyButton = Button(self.__master, text="Talk to\n Boy")
+##    self.__boyButton.place(x=640, y=295, width=100, height=75)
 
 ##Exploration buttons . . . rename-------------------------------------------
     self.__exploreButtonOne = Button(self.__master, text="Explore\n Room",\
@@ -222,8 +223,6 @@ class MainGUI:
     
 
   def disableAllButtonsInfinite(self):
-    self.__boyButton.config(state=DISABLED)
-    self.__motherButton.config(state=DISABLED)
     self.__fatherButton.config(state=DISABLED)
     self.__exploreButtonOne.config(state=DISABLED)
     self.__exploreButtonTwo.config(state=DISABLED)
@@ -283,45 +282,45 @@ class StatusGUI():
     self.__subMenu.add_command(label="Living Room",\
                                command=self.goBack)
 ##Father Status---------------------------------------------------------------
-    self.__fatherCanvasOne = Canvas(self.__master, height=170, width=245,\
-                                    bg='white')
-    self.__fatherCanvasOne.place(x=5, y=7.5)
+##    self.__fatherCanvasOne = Canvas(self.__master, height=170, width=245,\
+##                                    bg='white')
+##    self.__fatherCanvasOne.place(x=5, y=7.5)
 
     self.__fatherCanvasTwo = Canvas(self.__master, height=170, width=245,\
                                     bg='white')
     self.__fatherCanvasTwo.place(x=5, y=185)
     
 
-    self.__fatherCanvasThree = Canvas(self.__master, height=170, width=245,\
-                                      bg='white')
-    self.__fatherCanvasThree.place(x=5, y=362.5)
+##    self.__fatherCanvasThree = Canvas(self.__master, height=170, width=245,\
+##                                      bg='white')
+##    self.__fatherCanvasThree.place(x=5, y=362.5)
 
 ##Mother Status---------------------------------------------------------------
-    self.__motherStatusOne = Canvas(self.__master, height=170, width=240,\
-                                    bg='white')
-    self.__motherStatusOne.place(x=255, y=7.5)
+##    self.__motherStatusOne = Canvas(self.__master, height=170, width=240,\
+##                                    bg='white')
+##    self.__motherStatusOne.place(x=255, y=7.5)
 
     self.__motherStatusTwo = Canvas(self.__master, height=170, width=240,\
                                     bg='white')
     self.__motherStatusTwo.place(x=255, y=185)
 
-    self.__motherStatusThree = Canvas(self.__master, height=170, width=240,\
-                                      bg='white')
-    self.__motherStatusThree.place(x=255, y=362.5)
-
+##    self.__motherStatusThree = Canvas(self.__master, height=170, width=240,\
+##                                      bg='white')
+##    self.__motherStatusThree.place(x=255, y=362.5)
+##
 ##Brother Status--------------------------------------------------------------
-    self.__brotherStatusOne = Canvas(self.__master, height=170, width=240,\
-                                     bg='white')
-    self.__brotherStatusOne.place(x=500, y=7.5)
+##    self.__brotherStatusOne = Canvas(self.__master, height=170, width=240,\
+##                                     bg='white')
+##    self.__brotherStatusOne.place(x=500, y=7.5)
 
     self.__brotherStatusTwo = Canvas(self.__master, height=170, width=240,\
                                      bg='white')
     self.__brotherStatusTwo.place(x=500, y=185)
 
-    self.__brotherStatusThree = Canvas(self.__master, height=170, width=240,\
-                                       bg='white')
-    self.__brotherStatusThree.place(x=500, y=362.5)
-
+##    self.__brotherStatusThree = Canvas(self.__master, height=170, width=240,\
+##                                       bg='white')
+##    self.__brotherStatusThree.place(x=500, y=362.5)
+##
 ##Go Back Button--------------------------------------------------------------
   def goBack(self):
     self.__master.destroy()
@@ -330,7 +329,7 @@ class StatusGUI():
     print("New content coming soon...")
 
 ##Item Page-------------------------------------------------------------------
-class ItemsGUI():'
+class ItemsGUI():
   def __init__(self, master):
     self.__master = master
     self.__master.geometry('750x575')
