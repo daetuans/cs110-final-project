@@ -1,3 +1,5 @@
+
+
 class Dialogue:
   CHOICE_A = 'A'
   CHOICE_B = 'B'
@@ -26,16 +28,25 @@ class Dialogue:
 
     self.__remember = [] 
     self.__rememberStages = ['1','2','3', '4', '5', '6', '7', '8', '9']
+    self.__introCounter = 0
 
     
  
 ##The introduction------------------------------------------------------------
-  def introduction(self, introCounter):
+  def introduction(self):
     #This automatically comes onto the screen when the game begins, every\
     #time player presses the forward button the counter increments and\
     #extracts the next item in the list. All other buttons are diabled until\
     #the list is empy (might have to create a flag here to do that)
-    return self.__introDialogue[introCounter]
+    self.__intro = self.__introDialogue[self.__introCounter]
+    self.__introCounter += 1
+    return self.__intro
+
+  def getIntroCounter(self):
+    return self.__introCounter
+
+  def getLengthOfIntro(self):
+    return len(self.__introDialogue)
 
 ##Father----------------------------------------------------------------------
   def fatherDialogue(self, fatherCounter):
@@ -75,7 +86,7 @@ class Dialogue:
     return self.__motherResponse
 
 ##Brother---------------------------------------------------------------------
-  def brotherDialogue(self, brotherCounter):
+  def brotherDialogue(self, motherCounter):
     #same as father
     return self.__brotherIntroduction[brotherCounter]
   
@@ -106,3 +117,8 @@ class Dialogue:
     #will appear in the dialogue box. Every time the user presses forward\
     #the next memory in the lest will appear
     return self.__remember[rememberCounter]
+
+
+        
+        
+        
