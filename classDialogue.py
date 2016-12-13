@@ -15,10 +15,12 @@ class Dialogue:
   COUNTER_NINE = 9
   
   def __init__(self):
-    self.__introDialogue = ['a', 'b', 'c']
+    self.__introDialogue = ['WELCOME', 'TO', 'THE DOG']
 
-    self.__fatherIntroduction = ['a', 'b', 'c']
-    self.__fatherResponse = ['d', 'e', 'f']
+    self.__fatherIntroduction = ['LUKE', 'I AM...', 'YOUR FATHER',\
+                                 'Do you want to:\nA. Bite him\n B. Run away'\
+                                 + '\n C. Scream, "DADDY?!"']
+    self.__fatherResponse = ['OW!', 'WAIT, COME BACK!', 'WTF?!']
    
     self.__motherIntroduction = ['a', 'b', 'c']
     self.__motherResponse = ['d', 'e', 'f']
@@ -29,6 +31,7 @@ class Dialogue:
     self.__remember = [] 
     self.__rememberStages = ['1','2','3', '4', '5', '6', '7', '8', '9']
     self.__introCounter = 0
+    self.__fatherCounter = 0
 
     
  
@@ -49,24 +52,35 @@ class Dialogue:
     return len(self.__introDialogue)
 
 ##Father----------------------------------------------------------------------
-  def fatherDialogue(self, fatherCounter):
+  def fatherIntroduction(self):
     #When the user presses the father button all other buttons are diabled\
     #his intro speech comes on the screen. 
-    return self.__fatherIntroduction[fatherCounter]
+    self.__fatherIntro = self.__fatherIntroduction[self.__fatherCounter]
+    self.__fatherCounter += 1
+    return self.__fatherIntro
+
+  def getFatherCounter(self):
+    return self.__fatherCounter
+
+  def getLengthOfFatherIntro(self):
+    return len(self.__fatherIntroduction)
+
+  def resetFatherCounter(self):
+    self.__fatherCounter = 0
   
   def fatherResponseButton(self, button):
   #At the end of list of the fathers intro will describe the three choices\
   #the user can choose from. The A, B, and C buttons will enable
     if button == Dialogue.CHOICE_A:
-      self.__fatherResponse = self.__fatherResponce[Dialogue.COUNTER_ONE]
-      self.addMemory(self__rememberStages[COUNTER_ONE])
+      self.__theFatherResponse = self.__fatherResponse[Dialogue.COUNTER_ONE]
+      self.addMemory(self.__rememberStages[Dialogue.COUNTER_ONE])
     elif button == Dialogue.CHOICE_B:
-      self.__fatherResponse = self.__fatherResponce[Dialogue.COUNTER_TWO]
-      self.addMemory(self__rememberStages[COUNTER_TWO])
+      self.__theFatherResponse = self.__fatherResponse[Dialogue.COUNTER_TWO]
+      self.addMemory(self.__rememberStages[Dialogue.COUNTER_TWO])
     elif button == Dialogue.CHOICE_C:
-      self.__fatherResponse = self.__fatherResponce[Dialogue.COUNTER_THREE]
-      self.addMemory(self__rememberStages[COUNTER_THREE])
-    return self.__fatherResponse
+      self.__theFatherResponse = self.__fatherResponse[Dialogue.COUNTER_THREE]
+      self.addMemory(self.__rememberStages[Dialogue.COUNTER_THREE])
+    return self.__theFatherResponse
 
 ##Mother----------------------------------------------------------------------
   def motherDialogue(self, motherCounter):
@@ -75,15 +89,15 @@ class Dialogue:
   
   def motherResponseButton(self, button):
     if button == Dialogue.CHOICE_A:
-      self.__motherResponse = self.__motherResponce[Dialogue.COUNTER_ONE]
+      self.__theMotherResponse = self.__motherResponce[Dialogue.COUNTER_ONE]
       self.addMemory(self__rememberStages[COUNTER_FOUR])
     elif button == Dialogue.CHOICE_B:
-      self.__motherResponse = self.__motherResponce[Dialogue.COUNTER_TWO]
+      self.__theMotherResponse = self.__motherResponse[Dialogue.COUNTER_TWO]
       self.addMemory(self__rememberStages[COUNTER_FIVE])
     elif button == Dialogue.CHOICE_C:
-      self.__motherResponse = self.__motherResponce[Dialogue.COUNTER_THREE]
+      self.__theMotherResponse = self.__motherResponse[Dialogue.COUNTER_THREE]
       self.addMemory(self__rememberStages[COUNTER_SIX])
-    return self.__motherResponse
+    return self.__theMotherResponse
 
 ##Brother---------------------------------------------------------------------
   def brotherDialogue(self, motherCounter):
@@ -92,15 +106,15 @@ class Dialogue:
   
   def brotherResponseButton(self, button):
     if button == Dialogue.CHOICE_A:
-      self.__brotherResponse = self.__brotherResponce[Dialogue.COUNTER_ONE]
+      self.__theBrotherResponse = self.__brotherResponse[Dialogue.COUNTER_ONE]
       self.addMemory(self__rememberStages[COUNTER_SEVEN])
     elif button == Dialogue.CHOICE_B:
-      self.__brotherResponse = self.__brotherResponce[Dialogue.COUNTER_TWO]
+      self.__theBrotherResponse = self.__brotherResponse[Dialogue.COUNTER_TWO]
       self.addMemory(self__rememberStages[COUNTER_EIGHT])
     elif button == Dialogue.CHOICE_C:
-      self.__brotherResponse = self.__brotherResponce[Dialogue.COUNTER_THREE]
+      self.__theBrotherResponse = self.__brotherResponse[Dialogue.COUNTER_THREE]
       self.addMemory(self__rememberStages[COUNTER_NINE])
-    return self.__brotherResponse
+    return self.__theBrotherResponse
 
 ##Remember--------------------------------------------------------------------
   def addMemory(self, memory):
