@@ -1,5 +1,5 @@
 from tkinter import *
-
+from classDialogue import Dialogue
 
 class TitleWindow():
 
@@ -9,7 +9,7 @@ class TitleWindow():
     self.__master.title(' ')
     self.__master.wm_iconbitmap('bloodhfinal.ico')
     
-    self.__userName = None
+    self.__userName = StringVar()
     self.__topFrame = Frame(self.__master)
     self.__midFrame = Frame(self.__master)
     self.__botFrame = Frame(self.__master)
@@ -44,21 +44,18 @@ class TitleWindow():
    
   def setUserName(self, event):
     if (self.__nameEntry.get()).isalpha():
-      self.__userName = self.__nameEntry.get()
+      self.__userName.set(self.__nameEntry.get())
       self.__nameEntry.config(state=DISABLED)
       self.__enterButton.config(state='normal')
     else:
       messagebox.showinfo('ERROR','1. INPUT NAME\n'+\
                           '2. PRESS  <ENTER>  TO PROCEED')
       
-
-
   def goToMainGUI(self):
     root2=Toplevel(self.__master)
     myGUI=MainGUI(root2)
     
-
-
+##Main GUI--------------------------------------------------------------------
 class MainGUI:
   def __init__(self, master):
     self.__master = master
@@ -77,8 +74,10 @@ class MainGUI:
     self.__subMenu.add_command(label="Status", command=self.goToStatusGUI)
     self.__subMenu.add_separator()
     self.__subMenu.add_command(label="Remember...", command=self.future)
-
     self.__dialogue = StringVar()
+    self.__progress = StringVar()
+    self.__classDialogue = Dialogue()
+    self.__dialogue.set(self.__classDialogue.introduction())
 
 ##Living Room Picture---------------------------------------------------------
     self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
@@ -103,14 +102,15 @@ class MainGUI:
 ##    self.__secretRoomButton.place(x=595, y=10, width=100, height=50)
 ##
 ##Family member buttons-------------------------------------------------------
-    self.__boyButton = Button(self.__master, text="Talk to\n Boy")
-    self.__boyButton.place(x=640, y=30, width=100, height=75)
+    self.__fatherButton = Button(self.__master, text="Talk to\n Father",\
+                              command=self.future)
+    self.__fatherButton.place(x=640, y=30, width=100, height=75)
     
     self.__motherButton = Button(self.__master, text="Talk to\n Mother")
     self.__motherButton.place(x=640, y=167.4, width=100, height=75)
 
-    self.__fatherButton = Button(self.__master, text="Talk to\n Father")
-    self.__fatherButton.place(x=640, y=295, width=100, height=75)
+    self.__boyButton = Button(self.__master, text="Talk to\n Boy")
+    self.__boyButton.place(x=640, y=295, width=100, height=75)
 
 ##Exploration buttons . . . rename-------------------------------------------
     self.__exploreButtonOne = Button(self.__master, text="Explore\n Room",\
@@ -127,7 +127,7 @@ class MainGUI:
     self.__secretRoomButton = Button(self.__master, text="?",\
                                      command=self.goToLabGUI)
     self.__secretRoomButton.place(x=10, y=315, width=100, height=75)
-##    self.__secretRoomButton.config(state=DISABLED)
+    self.__secretRoomButton.config(state=DISABLED)
 
 ##Choice buttons--------------------------------------------------------------  
     self.__choiceAButton = Button(self.__master, text='A')
@@ -143,6 +143,7 @@ class MainGUI:
     self.__entryBox = Entry(self.__master, width=52)
     self.__entryBox.bind('<Return>')
     self.__entryBox.place(x=353.5, y=502, height=35)
+    self.__entryBox.config(state=DISABLED)
 
 ##Enter Button----------------------------------------------------------------
     self.__enterButton = Button(self.__master, text='Enter')
@@ -153,17 +154,49 @@ class MainGUI:
                            bg='white', textvariable = self.__dialogue)
     self.__textBox.place(x=10, y=400, height=87, width=655)
 
-##Progression Button----------------------------------------------------------
-    self.__forwardButton = Button(self.__master, text="Forward",\
-                                  command=self.displayDialogue)
+##Progression Button Base-----------------------------------------------------
+    self.__forwardButton = Button(self.__master, text='Forward',\
+                                        command=self.intro)
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
 
-##Sample Function-------------------------------------------------------------
-  def future(self):
-    print("New content coming soon...")
+    self.disableAllButtonsInfinite()
 
-  def displayDialogue(self):
-    return self.__dialogue.set('stuff')
+
+##Functions-------------------------------------------------------------------
+  def intro(self):
+    if self.__classDialogue.getIntroCounter() <\
+       self.__classDialogue.getLengthOfIntro():
+      self.__dialogue.set(self.__classDialogue.introduction())
+    else:
+      self.__dialogue.set(' ')
+      self.__fatherButton.config(state='normal')
+      self.__forwardButton.destroy()
+      self.createForwardButtonFather()
+
+  def createForwardButtonFather(self):
+    self.__forwardButton = Button(self.__master, text='Forward',\
+                                        command=self.future)
+    self.__forwardButton.place(x=665, y=400, width=75, height=88)
+    
+
+  def disableAllButtonsInfinite(self):
+    self.__boyButton.config(state=DISABLED)
+    self.__motherButton.config(state=DISABLED)
+    self.__fatherButton.config(state=DISABLED)
+    self.__exploreButtonOne.config(state=DISABLED)
+    self.__exploreButtonTwo.config(state=DISABLED)
+    self.__exploreButtonThree.config(state=DISABLED)
+    self.__choiceAButton.config(state=DISABLED)
+    self.__choiceBButton.config(state=DISABLED)
+    self.__choiceCButton.config(state=DISABLED)
+    self.__enterButton.config(state=DISABLED)
+    
+  def future(self):
+      self.__dialogue.set('New content coming soon...')
+    
+
+##  def displayDialogue(self):
+##    return self.__dialogue.set('stuff')
     
   def goToStatusGUI(self):
     root2=Toplevel(self.__master)
