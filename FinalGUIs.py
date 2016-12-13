@@ -3,7 +3,6 @@ from classDialogue import Dialogue
 from classStatus import Status
 
 class TitleWindow():
-
   def __init__(self, master):
     self.__master = master
     self.__master.geometry('750x575')
@@ -74,9 +73,11 @@ class MainGUI:
     self.__subMenu.add_command(label="Items", command=self.goToItemGUI)
     self.__subMenu.add_command(label="Status", command=self.goToStatusGUI)
     self.__subMenu.add_separator()
-    self.__subMenu.add_command(label="Remember...", command=self.future)
+    self.__subMenu.add_command(label="Remember...", command=\
+                               self.remember)
     self.__dialogue = StringVar()
     self.__progress = StringVar()
+  
     self.__classDialogue = Dialogue()
     self.__dialogue.set(self.__classDialogue.introduction())
 
@@ -86,6 +87,7 @@ class MainGUI:
     self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
                             (247,189,image=self.__mainRoomPic)
     self.__mainRoomCanvas.place(x=130, y=10)
+    
 ####Room buttons----------------------------------------------------------------
 ##    self.__livingRoomButton = Button(self.__master, text="Living Room")
 ##    self.__livingRoomButton.place(x=55, y=10, width=100, height=50)
@@ -102,7 +104,7 @@ class MainGUI:
 ##    self.__secretRoomButton = Button(self.__master, text="?")
 ##    self.__secretRoomButton.place(x=595, y=10, width=100, height=50)
 ##
-##Family member buttons-------------------------------------------------------
+###Family member buttons------------------------------------------------------
 ##    self.__fatherButton = Button(self.__master, text="Talk to\n Father",\
 ##                              command=self.fatherIntro)
 ##    self.__fatherButton.place(x=640, y=30, width=100, height=75)
@@ -136,40 +138,50 @@ class MainGUI:
 ##Choice buttons--------------------------------------------------------------  
     self.__choiceAButton = Button(self.__master, text='A',\
                                   command=lambda:self.fatherResponse('A'))
-    self.__choiceAButton.place(x=20, y=500, height=40, width=60)
+    self.__choiceAButton.place(x=225, y=500, height=40, width=60)
 
     self.__choiceBButton = Button(self.__master, text='B',\
                                   command=lambda:self.fatherResponse('B'))
-    self.__choiceBButton.place(x=137.5, y=500, height=40, width=60)
+    self.__choiceBButton.place(x=342.5, y=500, height=40, width=60)
 
     self.__choiceCButton = Button(self.__master, text='C',\
                                   command=lambda:self.fatherResponse('C'))
-    self.__choiceCButton.place(x=245, y=500, height=40, width=60)
+    self.__choiceCButton.place(x=450, y=500, height=40, width=60)
     
-##Entry Box-------------------------------------------------------------------
-    self.__entryBox = Entry(self.__master, width=52)
-    self.__entryBox.bind('<Return>')
-    self.__entryBox.place(x=353.5, y=502, height=35)
-    self.__entryBox.config(state=DISABLED)
-
-##Enter Button----------------------------------------------------------------
-    self.__enterButton = Button(self.__master, text='Enter')
-    self.__enterButton.place(x=670, y=502, height=35, width=60)
-    
+####Entry Box-------------------------------------------------------------------
+##    self.__entryBox = Entry(self.__master, width=52)
+##    self.__entryBox.bind('<Return>')
+##    self.__entryBox.place(x=353.5, y=502, height=35)
+##    self.__entryBox.config(state=DISABLED)
+##
+####Enter Button----------------------------------------------------------------
+##    self.__enterButton = Button(self.__master, text='Enter')
+##    self.__enterButton.place(x=670, y=502, height=35, width=60)
+   
 ##Text Box--------------------------------------------------------------------
     self.__textBox = Label(self.__master, anchor=NW,\
                            bg='white', textvariable = self.__dialogue)
     self.__textBox.place(x=10, y=400, height=87, width=655)
 
 ##Progression Button Base-----------------------------------------------------
-    self.__forwardButton = Button(self.__master, text='Forward',\
+    self.__progress.set('Forward')
+    self.__forwardButton = Button(self.__master, textvariable=\
+                                  self.__progress,\
                                         command=self.intro)
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
 
-##    self.disableAllButtonsInfinite()
+    self.disableAllButtonsInfinite()
 
 
 ##Functions-------------------------------------------------------------------
+  def remember(self):
+    if self.__classDialogue.rememberMonologue() == []:
+      message = messagebox.showinfo("Nothing.",\
+                                    "Maybe I should take to the boy . . .")
+    else:
+      message = messagebox.showinfo('I remember . . .',\
+                               self.__classDialogue.rememberMonologue())
+
   def intro(self):
     if self.__classDialogue.getIntroCounter() <\
        self.__classDialogue.getLengthOfIntro():
@@ -181,7 +193,8 @@ class MainGUI:
       self.createForwardButton(self.fatherIntro)
 
   def createForwardButton(self, theCommand):
-    self.__forwardButton = Button(self.__master, text='Forward',\
+    self.__forwardButton = Button(self.__master, textvariable=\
+                                  self.__progress,\
                                         command=theCommand)
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
     self.__forwardButton.config(state=DISABLED)
@@ -194,6 +207,7 @@ class MainGUI:
 
   def fatherIntro(self):
     self.__fatherButton.config(state=DISABLED)
+    self.disableRooms()
     self.__forwardButton.config(state='normal')
     if self.__classDialogue.getFatherCounter() <\
        self.__classDialogue.getLengthOfFatherIntro():
@@ -203,26 +217,26 @@ class MainGUI:
       self.__forwardButton.destroy()
       self.createForwardButton(self.reset)
       self.enableChoiceButtons()
+      
 
   def fatherResponse(self, button):
     self.__dialogue.set(self.__classDialogue.fatherResponseButton(button))
     self.disableChoiceButtons()
     self.enableForwardButton()
+    
 ##    if self.__dialogue.set(' ')==False:
-##      self.disableForwardButton()
-##    
+##      self.disableForwardButton()   
       
   def reset(self):
     self.__resetCounter=0
     self.__dialogue.set(' ')
+    self.enableRooms()
     self.__resetCounter+=1
     if self.__resetCounter == 1:
       self.__forwardButton.destroy()
       self.createForwardButton(self.fatherIntro)
       self.__classDialogue.resetFatherCounter()
       self.__fatherButton.config(state='normal')
-    
-    
 
   def disableAllButtonsInfinite(self):
     self.__fatherButton.config(state=DISABLED)
@@ -232,7 +246,6 @@ class MainGUI:
     self.__choiceAButton.config(state=DISABLED)
     self.__choiceBButton.config(state=DISABLED)
     self.__choiceCButton.config(state=DISABLED)
-    self.__enterButton.config(state=DISABLED)
 
   def enableChoiceButtons(self):
     self.__choiceAButton.config(state='normal')
@@ -242,12 +255,21 @@ class MainGUI:
   def disableChoiceButtons(self):
     self.__choiceAButton.config(state=DISABLED)
     self.__choiceBButton.config(state=DISABLED)
-    self.__choiceCButton.config(state=DISABLED)    
+    self.__choiceCButton.config(state=DISABLED)
+
+  def enableRooms(self):
+    self.__exploreButtonOne.config(state='normal')
+    self.__exploreButtonTwo.config(state='normal')
+    self.__exploreButtonThree.config(state='normal')
+
+  def disableRooms(self):
+    self.__exploreButtonOne.config(state=DISABLED)
+    self.__exploreButtonTwo.config(state=DISABLED)
+    self.__exploreButtonThree.config(state=DISABLED)
     
   def future(self):
       self.__dialogue.set('New content coming soon...')
     
-
 ##  def displayDialogue(self):
 ##    return self.__dialogue.set('stuff')
     
@@ -280,16 +302,16 @@ class MainGUI:
 class RoomOneGUI():
   def __init__(self, master):
     self.__master = master
-    self.__master.geometry('750x575')
-    #X AND Y WIDTH AND HEIGHT: 750-X, 575-Y    
+    self.__master.geometry('750x575')   
     self.__master.title(' ')
     self.__master.wm_iconbitmap('bloodhfinal.ico')
     self.__description = StringVar()
 
 ##Living Room Picture---------------------------------------------------------
-    self.__roomOneCanvas = Canvas(self.__master, height=378, width=490)
-    self.__roomOnePic = PhotoImage(file='roomOneFinal.gif')
-    self.__roomOneScreen =self.__roomOneCanvas.create_image\
+    self.__roomOneCanvas = Canvas(self.__master, height=378, width=490,\
+                                  bg='white')
+    self.__roomOnePic = PhotoImage(file='roomOneFinalGIF.gif')
+    self.__roomOneScreen = self.__roomOneCanvas.create_image\
                             (247,189,image=self.__roomOnePic)
     self.__roomOneCanvas.place(x=130, y=10)
 
@@ -319,11 +341,11 @@ class RoomTwoGUI():
     self.__description = StringVar()
 
 ##Living Room Picture---------------------------------------------------------
-    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
-    self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
-    self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
-                            (247,189,image=self.__mainRoomPic)
-    self.__mainRoomCanvas.place(x=130, y=10)
+    self.__roomTwoCanvas = Canvas(self.__master, height=378, width=490)
+    self.__roomTwoPic = PhotoImage(file='roomTwoFinal.gif')
+    self.__roomTwoScreen =self.__roomTwoCanvas.create_image\
+                            (247,189,image=self.__roomTwoPic)
+    self.__roomTwoCanvas.place(x=130, y=10)
 
 ##Text Box--------------------------------------------------------------------
     self.__textBox = Label(self.__master, anchor=NW,\
@@ -350,13 +372,13 @@ class RoomThreeGUI():
     self.__master.wm_iconbitmap('bloodhfinal.ico')
     self.__description = StringVar()
 
-##Living Room Picture---------------------------------------------------------
-    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
-    self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
-    self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
-                            (247,189,image=self.__mainRoomPic)
-    self.__mainRoomCanvas.place(x=130, y=10)
-
+####Living Room Picture---------------------------------------------------------
+##    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
+##    self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
+##    self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
+##                            (247,189,image=self.__mainRoomPic)
+##    self.__mainRoomCanvas.place(x=130, y=10)
+##
 ##Text Box--------------------------------------------------------------------
     self.__textBox = Label(self.__master, anchor=NW,\
                            bg='white')
@@ -396,7 +418,7 @@ class StatusGUI():
 ##    self.__fatherCanvasOne.place(x=5, y=7.5)
 
     self.__fatherCanvasTwo = Canvas(self.__master, height=170, width=245,\
-                                    bg='white')
+                                    bg=self.__status.currentColor())
     self.__fatherCanvasTwo.place(x=5, y=185)
     
 
@@ -410,7 +432,7 @@ class StatusGUI():
 ##    self.__motherStatusOne.place(x=255, y=7.5)
 
     self.__motherStatusTwo = Canvas(self.__master, height=170, width=240,\
-                                    bg='white')
+                                    bg=self.__status.currentColor())
     self.__motherStatusTwo.place(x=255, y=185)
 
 ##    self.__motherStatusThree = Canvas(self.__master, height=170, width=240,\
@@ -423,7 +445,7 @@ class StatusGUI():
 ##    self.__brotherStatusOne.place(x=500, y=7.5)
 
     self.__brotherStatusTwo = Canvas(self.__master, height=170, width=240,\
-                                     bg='white')
+                                     bg=self.__status.currentColor())
     self.__brotherStatusTwo.place(x=500, y=185)
 
 ##    self.__brotherStatusThree = Canvas(self.__master, height=170, width=240,\
