@@ -116,13 +116,15 @@ class MainGUI:
 
 ##Exploration buttons . . . rename-------------------------------------------
     self.__exploreButtonOne = Button(self.__master, text="Explore\n Room",\
-                                     command=self.future)
+                                     command=self.goToRoomOneGUI)
     self.__exploreButtonOne.place(x=10, y=10, width=100, height=75)
     
-    self.__exploreButtonTwo = Button(self.__master, text="Explore\n Room")
+    self.__exploreButtonTwo = Button(self.__master, text="Explore\n Room",\
+                                     command=self.goToRoomTwoGUI)
     self.__exploreButtonTwo.place(x=10, y=111.6, width=100, height=75)
     
-    self.__exploreButtonThree = Button(self.__master, text="Explore\n Room")
+    self.__exploreButtonThree = Button(self.__master, text="Explore\n Room",\
+                                       command=self.goToRoomThreeGUI)
     self.__exploreButtonThree.place(x=10, y=213.2, width=100, height=75)
 
 ##Secret Room-----------------------------------------------------------------        
@@ -164,7 +166,7 @@ class MainGUI:
                                         command=self.intro)
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
 
-    self.disableAllButtonsInfinite()
+##    self.disableAllButtonsInfinite()
 
 
 ##Functions-------------------------------------------------------------------
@@ -253,7 +255,6 @@ class MainGUI:
     root2=Toplevel(self.__master)
     myGUI=StatusGUI(root2)
     
-
   def goToItemGUI(self):
     root2=Toplevel(self.__master)
     myGUI=ItemsGUI(root2)
@@ -261,6 +262,114 @@ class MainGUI:
   def goToLabGUI(self):
     root2=Toplevel(self.__master)
     myGUI=LabGUI(root2)
+
+  def goToRoomOneGUI(self):
+    root2=Toplevel(self.__master)
+    myGUI=RoomOneGUI(root2)
+
+  def goToRoomTwoGUI(self):
+    root2=Toplevel(self.__master)
+    myGUI=RoomTwoGUI(root2)
+
+  def goToRoomThreeGUI(self):
+    root2=Toplevel(self.__master)
+    myGUI=RoomThreeGUI(root2)
+
+    
+##Room One--------------------------------------------------------------------
+class RoomOneGUI():
+  def __init__(self, master):
+    self.__master = master
+    self.__master.geometry('750x575')
+    #X AND Y WIDTH AND HEIGHT: 750-X, 575-Y    
+    self.__master.title(' ')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    self.__description = StringVar()
+
+##Living Room Picture---------------------------------------------------------
+    self.__roomOneCanvas = Canvas(self.__master, height=378, width=490)
+    self.__roomOnePic = PhotoImage(file='roomOneFinal.gif')
+    self.__roomOneScreen =self.__roomOneCanvas.create_image\
+                            (247,189,image=self.__roomOnePic)
+    self.__roomOneCanvas.place(x=130, y=10)
+
+##Text Box--------------------------------------------------------------------
+    self.__textBox = Label(self.__master, anchor=NW,\
+                           bg='white')
+    self.__textBox.place(x=47.5, y=400, height=87, width=655)
+
+##Entry Box-------------------------------------------------------------------
+    self.__entryBox = Entry(self.__master, width=52)
+    self.__entryBox.bind('<Return>')
+    self.__entryBox.place(x=200, y=502, height=35)
+
+##Enter Button----------------------------------------------------------------
+    self.__enterButton = Button(self.__master, text='Enter')
+    self.__enterButton.place(x=506.5, y=502, height=35, width=60)
+
+
+##Room Two--------------------------------------------------------------------
+class RoomTwoGUI():
+  def __init__(self, master):
+    self.__master = master
+    self.__master.geometry('750x575')
+    #X AND Y WIDTH AND HEIGHT: 750-X, 575-Y    
+    self.__master.title(' ')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    self.__description = StringVar()
+
+##Living Room Picture---------------------------------------------------------
+    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
+    self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
+    self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
+                            (247,189,image=self.__mainRoomPic)
+    self.__mainRoomCanvas.place(x=130, y=10)
+
+##Text Box--------------------------------------------------------------------
+    self.__textBox = Label(self.__master, anchor=NW,\
+                           bg='white')
+    self.__textBox.place(x=47.5, y=400, height=87, width=655)
+
+##Entry Box-------------------------------------------------------------------
+    self.__entryBox = Entry(self.__master, width=52)
+    self.__entryBox.bind('<Return>')
+    self.__entryBox.place(x=200, y=502, height=35)
+
+##Enter Button----------------------------------------------------------------
+    self.__enterButton = Button(self.__master, text='Enter')
+    self.__enterButton.place(x=506.5, y=502, height=35, width=60)
+
+
+##Room Three------------------------------------------------------------------
+class RoomThreeGUI():
+  def __init__(self, master):
+    self.__master = master
+    self.__master.geometry('750x575')
+    #X AND Y WIDTH AND HEIGHT: 750-X, 575-Y    
+    self.__master.title(' ')
+    self.__master.wm_iconbitmap('bloodhfinal.ico')
+    self.__description = StringVar()
+
+##Living Room Picture---------------------------------------------------------
+    self.__mainRoomCanvas = Canvas(self.__master, height=378, width=490)
+    self.__mainRoomPic = PhotoImage(file='rsz_livingRoom2.gif')
+    self.__mainRoomScreen =self.__mainRoomCanvas.create_image\
+                            (247,189,image=self.__mainRoomPic)
+    self.__mainRoomCanvas.place(x=130, y=10)
+
+##Text Box--------------------------------------------------------------------
+    self.__textBox = Label(self.__master, anchor=NW,\
+                           bg='white')
+    self.__textBox.place(x=47.5, y=400, height=87, width=655)
+
+##Entry Box-------------------------------------------------------------------
+    self.__entryBox = Entry(self.__master, width=52)
+    self.__entryBox.bind('<Return>')
+    self.__entryBox.place(x=200, y=502, height=35)
+
+##Enter Button----------------------------------------------------------------
+    self.__enterButton = Button(self.__master, text='Enter')
+    self.__enterButton.place(x=506.5, y=502, height=35, width=60)
     
 ##Status Page-----------------------------------------------------------------
 class StatusGUI():
