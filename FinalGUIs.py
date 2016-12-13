@@ -1,5 +1,6 @@
 from tkinter import *
 from classDialogue import Dialogue
+from classStatus import Status
 
 class TitleWindow():
 
@@ -103,7 +104,7 @@ class MainGUI:
 ##
 ##Family member buttons-------------------------------------------------------
     self.__fatherButton = Button(self.__master, text="Talk to\n Father",\
-                              command=self.future)
+                              command=self.fatherIntro)
     self.__fatherButton.place(x=640, y=30, width=100, height=75)
     
     self.__motherButton = Button(self.__master, text="Talk to\n Mother")
@@ -130,13 +131,16 @@ class MainGUI:
     self.__secretRoomButton.config(state=DISABLED)
 
 ##Choice buttons--------------------------------------------------------------  
-    self.__choiceAButton = Button(self.__master, text='A')
+    self.__choiceAButton = Button(self.__master, text='A',\
+                                  command=lambda:self.fatherResponse('A'))
     self.__choiceAButton.place(x=20, y=500, height=40, width=60)
 
-    self.__choiceBButton = Button(self.__master, text='B')
+    self.__choiceBButton = Button(self.__master, text='B',\
+                                  command=lambda:self.fatherResponse('B'))
     self.__choiceBButton.place(x=137.5, y=500, height=40, width=60)
 
-    self.__choiceCButton = Button(self.__master, text='C')
+    self.__choiceCButton = Button(self.__master, text='C',\
+                                  command=lambda:self.fatherResponse('C'))
     self.__choiceCButton.place(x=245, y=500, height=40, width=60)
     
 ##Entry Box-------------------------------------------------------------------
@@ -171,12 +175,50 @@ class MainGUI:
       self.__dialogue.set(' ')
       self.__fatherButton.config(state='normal')
       self.__forwardButton.destroy()
-      self.createForwardButtonFather()
+      self.createForwardButton(self.fatherIntro)
 
-  def createForwardButtonFather(self):
+  def createForwardButton(self, theCommand):
     self.__forwardButton = Button(self.__master, text='Forward',\
-                                        command=self.future)
+                                        command=theCommand)
     self.__forwardButton.place(x=665, y=400, width=75, height=88)
+    self.__forwardButton.config(state=DISABLED)
+
+  def enableForwardButton(self):
+    self.__forwardButton.config(state='normal')
+
+  def disableForwardButton(self):
+    self.__forwardButton.config(state=DISABLED)
+
+  def fatherIntro(self):
+    self.__fatherButton.config(state=DISABLED)
+    self.__forwardButton.config(state='normal')
+    if self.__classDialogue.getFatherCounter() <\
+       self.__classDialogue.getLengthOfFatherIntro():
+      self.__dialogue.set(self.__classDialogue.fatherIntroduction())
+    else:
+##      self.__dialogue.set(' ')
+      self.__forwardButton.destroy()
+      self.createForwardButton(self.reset)
+      self.enableChoiceButtons()
+
+  def fatherResponse(self, button):
+    self.__dialogue.set(self.__classDialogue.fatherResponseButton(button))
+    self.disableChoiceButtons()
+    self.enableForwardButton()
+##    if self.__dialogue.set(' ')==False:
+##      self.disableForwardButton()
+##    
+      
+  def reset(self):
+    self.__resetCounter=0
+    self.__dialogue.set(' ')
+    self.__resetCounter+=1
+    if self.__resetCounter == 1:
+      self.__forwardButton.destroy()
+      self.createForwardButton(self.fatherIntro)
+      self.__classDialogue.resetFatherCounter()
+      self.__fatherButton.config(state='normal')
+    
     
 
   def disableAllButtonsInfinite(self):
@@ -190,6 +232,16 @@ class MainGUI:
     self.__choiceBButton.config(state=DISABLED)
     self.__choiceCButton.config(state=DISABLED)
     self.__enterButton.config(state=DISABLED)
+
+  def enableChoiceButtons(self):
+    self.__choiceAButton.config(state='normal')
+    self.__choiceBButton.config(state='normal')
+    self.__choiceCButton.config(state='normal')
+
+  def disableChoiceButtons(self):
+    self.__choiceAButton.config(state=DISABLED)
+    self.__choiceBButton.config(state=DISABLED)
+    self.__choiceCButton.config(state=DISABLED)    
     
   def future(self):
       self.__dialogue.set('New content coming soon...')
@@ -219,6 +271,8 @@ class StatusGUI():
     self.__master.geometry('750x575')
     self.__master.title((' '*100) +'STATUS')
     self.__master.wm_iconbitmap('bloodhfinal.ico')
+
+    self.__status = Status()
 
     self.__menu = Menu(self.__master)
     self.__master.config(menu=self.__menu)
@@ -276,7 +330,7 @@ class StatusGUI():
     print("New content coming soon...")
 
 ##Item Page-------------------------------------------------------------------
-class ItemsGUI():
+class ItemsGUI():'
   def __init__(self, master):
     self.__master = master
     self.__master.geometry('750x575')
