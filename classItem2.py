@@ -55,8 +55,8 @@ class Item:
          return itemGained
 
 class RoomTwo(Item):
-
-  self.__roomTwoAnswer = "human"
+  def __init__(self):
+    self.__roomTwoAnswer = "human"
 
   def guessTheAnswer(self, entryData):
      while entryData != self.__roomTwoAnswer:
@@ -70,9 +70,10 @@ class RoomTwo(Item):
          return itemGained
 
 class RoomThree(Item):
+  def __init__(self):
+    self.__roomThreeAnswer = "mind
 
-  self.__roomThreeAnswer = "mind
-    def guessTheAnswer(self, entryData):
+  def guessTheAnswer(self, entryData):
      while entryData != self.__roomThreeAnswer:
        messagebox.showwarning(
          'INCORRECT', 
